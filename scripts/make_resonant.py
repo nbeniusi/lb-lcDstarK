@@ -14,6 +14,14 @@ with uproot.open(args.infile) as f:
     t = f["DecayTree"]
     # Pull only the mass branch to build w(m); we can copy other branches later if needed
     m = t[args.mass_branch].array(library="np")  # GeV
+    mmin, mmax = float(m.min()), float(m.max())
+    if not (mmin <= args.M <= mmax):
+        raise SystemExit(
+            f"[ERROR] M={args.M:.3f} GeV is outside observed {args.mass_branch} range "
+            f"[{mmin:.3f}, {mmax:.3f}] GeV. Choose M within kinematic limits or a different pair."
+    )
+    print(f"[INFO] {args.mass_branch} range: [{mmin:.3f}, {mmax:.3f}] GeV (OK for M={args.M:.3f})")
+
     # Relativistic Breit–Wigner (constant width toy): w(m) ∝ 1 / [(m^2 - M^2)^2 + M^2 Γ^2]
     M2 = args.M**2
     w  = 1.0 / ((m*m - M2)**2 + (M2 * args.G*args.G))
