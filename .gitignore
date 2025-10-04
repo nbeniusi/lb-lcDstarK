@@ -1,0 +1,27 @@
+cat > .gitignore << 'EOF'
+# --- Python standard ---
+__pycache__/
+*.py[cod]
+*.so
+*.egg*
+*.manifest
+*.spec
+.env
+.venv/
+env/
+venv/
+pip-wheel-metadata/
+*.log
+.mypy_cache/
+.pytest_cache/
+.ipynb_checkpoints/
+# --- Editors/OS ---
+.DS_Store
+.idea/
+.vscode/
+# --- Project-specific (HEP / large outputs) ---
+*.root
+outputs/
+data/
+# If you need to version a tiny .root test file, remove *.root and use Git LFS instead.
+EOF
